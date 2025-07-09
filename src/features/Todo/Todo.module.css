@@ -1,0 +1,11 @@
+.todo {
+    border-radius: 5px;
+    background-color: #ffff;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.todo__title {
+    color: rgb(78, 78, 78);
+    text-align: center;
+}
