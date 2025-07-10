@@ -1,9 +1,18 @@
 import styles from "./Todo.module.css";
 import { useEffect, useState } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
+import { CardList } from "../CardList/CardList";
+
+// TODO: вынести в отдельную сущность
+type TodoIDType = ITodo["id"];
+type TodoCompletedType = ITodo["completed"];
+export type ChangeTodoCompletedFunction = (
+  id: TodoIDType,
+  completed: TodoCompletedType
+) => void;
 
 export const Todo = () => {
-  const { fetchedTodos, loading, error } = useFetchTodos(6);
+  const { fetchedTodos, loading, error } = useFetchTodos(15);
 
   const [todos, setTodos] = useState<ITodo[]>([]);
 
@@ -13,25 +22,27 @@ export const Todo = () => {
     }
   }, [fetchedTodos]);
 
-  console.log(todos);
+  const changeTodoCompleted: ChangeTodoCompletedFunction = (id, completed) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed };
+        }
+        return todo;
+      });
+    });
+  };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error.message}</p>;
-  }
 
   return (
     <div className={styles.todo}>
       <h1 className={styles.todo__title}>Todo List</h1>
-      {todos.map((todo) => (
-          <div>
-            <p>{todo.id}</p>
-            <p>{todo.title}</p>
-          </div>
-        ))}
+      <CardList
+        todos={todos}
+        loading={loading}
+        error={error}
+        onClick={changeTodoCompleted}
+      />
     </div>
   );
 };

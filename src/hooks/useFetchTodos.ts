@@ -30,7 +30,7 @@ export const useFetchTodos = (limit: number) => {
         setFetchedTodos(response.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError(new Error(error.response?.data.errText));
+          setError(new Error(error.message || "Unknown error"));
         } else if (error instanceof Error) {
           setError(new Error(error.message));
         }
