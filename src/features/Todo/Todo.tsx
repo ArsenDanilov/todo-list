@@ -14,13 +14,10 @@ export type ChangeTodoCompletedFunction = (
   completed: TodoCompletedType
 ) => void;
 
-export type SetTodoFunction = React.Dispatch<React.SetStateAction<ITodo[]>>;
-
 export const Todo = () => {
   const { fetchedTodos, loading, error } = useFetchTodos(3);
 
   const [todos, setTodos] = useState<ITodo[]>([]);
-
 
   useEffect(() => {
     if (fetchedTodos) {
@@ -44,13 +41,13 @@ export const Todo = () => {
   return (
     <div className={styles.todo}>
       <h1 className={styles.todo__title}>Todo List</h1>
-      <TodoSearcher todos={todos} setTodos={setTodos}/>
-      <CardList
+      <TodoSearcher setTodos={setTodos}/>
+      {todos.length ? <CardList
         todos={todos}
         loading={loading}
         error={error}
         onClick={changeTodoCompleted}
-      />
+      /> : <p>There are no todos matching the search</p>}
     </div>
   );
 };
