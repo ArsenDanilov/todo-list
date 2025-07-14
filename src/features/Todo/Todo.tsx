@@ -2,19 +2,25 @@ import styles from "./Todo.module.css";
 import { useEffect, useState } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
+import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
 
 // TODO: вынести в отдельную сущность
 type TodoIDType = ITodo["id"];
+
 type TodoCompletedType = ITodo["completed"];
+
 export type ChangeTodoCompletedFunction = (
   id: TodoIDType,
   completed: TodoCompletedType
 ) => void;
 
+export type SetTodoFunction = React.Dispatch<React.SetStateAction<ITodo[]>>;
+
 export const Todo = () => {
-  const { fetchedTodos, loading, error } = useFetchTodos(15);
+  const { fetchedTodos, loading, error } = useFetchTodos(3);
 
   const [todos, setTodos] = useState<ITodo[]>([]);
+
 
   useEffect(() => {
     if (fetchedTodos) {
@@ -37,6 +43,7 @@ export const Todo = () => {
   return (
     <div className={styles.todo}>
       <h1 className={styles.todo__title}>Todo List</h1>
+      <TodoSearcher todos={todos} setTodos={setTodos}/>
       <CardList
         todos={todos}
         loading={loading}

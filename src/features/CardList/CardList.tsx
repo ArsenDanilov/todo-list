@@ -3,14 +3,14 @@ import { Card } from "../Card/Card";
 import styles from "./CardList.module.css"
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
 
-interface ICardListProps {
+interface ICardList {
   todos: ITodo[];
   loading: boolean;
   error: Error | null;
   onClick: ChangeTodoCompletedFunction;
 }
 
-export const CardList = ({ todos, loading, error, onClick }: ICardListProps) => {
+export const CardList = ({ todos, loading, error, onClick }: ICardList) => {
   console.log(todos);
 
   if (loading) {
