@@ -10,25 +10,12 @@ interface ITodoSearcher {
 export const TodoSearcher = ({ todos, setTodos }: ITodoSearcher) => {
   const [userInput, setUserInput] = useState("");
 
-    // const handleSearch = (event: KeyboardEvent<HTMLInputElement>): void => {
-    //   const inputElement = event.target as HTMLInputElement;
-    //   setUserInput(inputElement.value);
-
-    //   const filteredTodos = todos.filter((todo) => {
-    //     return todo.title.toLowerCase().includes(userInput.toLowerCase());
-    //   });
-
-    //   if (filteredTodos.length && userInput !== "") {
-    //     setTodos(filteredTodos);
-    //   }
-    // };
-
   const handleSearch = (event: KeyboardEvent<HTMLInputElement>): void => {
     const inputElement = event.target as HTMLInputElement;
     setUserInput(inputElement.value);
 
     const filteredTodos = todos.filter((todo) => {
-      return todo.title.includes(userInput);
+      return todo.title.toLowerCase().includes(userInput.toLowerCase());
     });
 
     if (filteredTodos.length && userInput !== "") {
@@ -36,12 +23,25 @@ export const TodoSearcher = ({ todos, setTodos }: ITodoSearcher) => {
     }
   };
 
+  const debounce = <T extends (event: KeyboardEvent<HTMLInputElement>) => void>(fn: T, ms: number): T => {
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    
+    return ((event: React.KeyboardEvent<HTMLInputElement>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fn(event);
+      }, ms);
+    }) as T;
+  };
+
+  const debouncedHandleSearch = debounce(handleSearch, 500);
+
   return (
     <div>
       <input
         type="text"
         placeholder="Type todo title for search"
-        onKeyUp={handleSearch}
+        onKeyUp={debouncedHandleSearch}
       />
     </div>
   );

@@ -25,6 +25,7 @@ export const Todo = () => {
   useEffect(() => {
     if (fetchedTodos) {
       setTodos(fetchedTodos);
+      localStorage.setItem('todos', JSON.stringify(fetchedTodos));
     }
   }, [fetchedTodos]);
 
