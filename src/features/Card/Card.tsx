@@ -1,28 +1,24 @@
-import { useState } from "react";
+import { memo } from "react";
 import styles from "./Card.module.css";
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
 
-// TODO: переписать
 interface ICard {
-    id: number,
-    title: string,
-    completed: boolean,
-    onClick: ChangeTodoCompletedFunction
+  id: number;
+  title: string;
+  completed: boolean;
+  onClick: ChangeTodoCompletedFunction;
 }
 
-export const Card = ({ id, title, completed, onClick }: ICard) => {
-
-  const [status, setStatus] = useState(completed)
+export const Card = memo(({ id, title, completed, onClick }: ICard) => {
 
   const toggleStatus = () => {
-    onClick(id, status)
-    setStatus(!status);
+    onClick(id, !completed);
   }
 
   return (
     <div className={styles.card}>
-      <input type="checkbox" checked={status} onClick={toggleStatus}/>
+      <input type="checkbox" checked={completed} onClick={toggleStatus} />
       <p>Task: {title}</p>
     </div>
   );
-};
+});

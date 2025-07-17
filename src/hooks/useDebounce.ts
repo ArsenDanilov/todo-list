@@ -1,14 +1,10 @@
-export const useDebounce = <T extends (...args: unknown[]) => unknown>(fn: T, ms: number) => {
+export const useDebounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(fn: F, ms: number): ((...args: Parameters<F>) => void) => {
   let timeout: ReturnType<typeof setTimeout> | undefined;
 
-   return function (this: ThisParameterType<T>, ...args: Parameters<T>): ReturnType<T> | undefined {
-    const fnCall = () => {
-      return fn.apply(this, args);
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(fnCall, ms);
-
-    return undefined;
-  };
+   return (...args: Parameters<F>) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          fn(...args);
+        }, ms);
+      };
 };
