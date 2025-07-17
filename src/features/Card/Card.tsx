@@ -15,9 +15,12 @@ export const Card = memo(({ id, title, completed, onClick }: ICard) => {
     onClick(id, !completed);
   }
 
+  console.log('render');
+  
+
   return (
     <div className={styles.card}>
-      <input type="checkbox" checked={completed} onClick={toggleStatus} />
+      <input type="checkbox" checked={completed} onChange={toggleStatus} />
       <p>Task: {title}</p>
     </div>
   );
