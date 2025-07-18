@@ -1,8 +1,9 @@
 html {
-  background-color: rgb(62, 62, 226);
+  background-color: #ffffff;;
+  color: black; 
 }
 
 .container {
-  padding: 50px;
+  padding: 30px 100px;
 }
 

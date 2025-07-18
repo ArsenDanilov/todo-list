@@ -3,4 +3,16 @@
     width: 100%;
     flex-wrap: wrap;
     gap: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.card_completed {
+    border: 2px solid green;
+}
+
+.completed {
+    text-decoration: line-through;
 }

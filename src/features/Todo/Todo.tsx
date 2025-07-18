@@ -12,7 +12,7 @@ export type ChangeTodoCompletedFunction = (
 ) => void;
 
 export const Todo = () => {
-  const { fetchedTodos, loading, error } = useFetchTodos(3);
+  const { fetchedTodos, loading, error } = useFetchTodos(100);
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
   const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
