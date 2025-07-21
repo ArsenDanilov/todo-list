@@ -1,8 +1,9 @@
 import styles from "./Todo.module.css";
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
 import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
+import { useFilterTodos } from "../../hooks/useFilterTodos";
 
 type TodoIDType = ITodo["id"];
 type TodoCompletedType = ITodo["completed"];
@@ -12,10 +13,9 @@ export type ChangeTodoCompletedFunction = (
 ) => void;
 
 export const Todo = () => {
-  const { fetchedTodos, loading, error } = useFetchTodos(100);
+  const { fetchedTodos, loading, error } = useFetchTodos(3);
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
-  const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
 
   useEffect(() => {
     if (fetchedTodos) {
@@ -40,18 +40,7 @@ export const Todo = () => {
     []
   );
 
-  const filterTodos = useMemo(() => {
-    const todosAfterFilter = todos.filter((todo) =>
-      todo.title.toLowerCase().includes(searchInput.toLowerCase())
-    );
-
-    if (todosAfterFilter.length && searchInput !== "") {
-      setFilteredTodos(todosAfterFilter);
-    } else if (!todosAfterFilter.length) {
-      setFilteredTodos([]);
-    }
-    
-  }, [todos, searchInput]);
+  const filteredTodos = useFilterTodos(todos, searchInput);
 
   return (
     <div className={styles.todo}>
