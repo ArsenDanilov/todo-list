@@ -1,8 +1,9 @@
 import { memo, useCallback, type KeyboardEvent } from "react";
 import styles from "./TodoSearcher.module.css";
 import { useDebounce } from "../../hooks/useDebounce";
+import { type ITodosStore } from "../../store/store";
 
-type SetSearchInputType = React.Dispatch<React.SetStateAction<string>>;
+type SetSearchInputType = ITodosStore['setSearchInput'];
 
 export const TodoSearcher = memo(({ setSearchInput }: { setSearchInput: SetSearchInputType }) => {
 

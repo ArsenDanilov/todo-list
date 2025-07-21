@@ -11,6 +11,7 @@ interface ICardList {
   onClick: ChangeTodoCompletedFunction;
 }
 
+// TODO: проверить, можно ли не передавать функцию-onClick в пропсе
 export const CardList = memo(({ todos, loading, error, onClick }: ICardList) => {
 
   if (loading) {

@@ -1,9 +1,10 @@
 import styles from "./Todo.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
 import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
 import { useFilterTodos } from "../../hooks/useFilterTodos";
+import { useTodosStore } from "../../store/store";
 
 type TodoIDType = ITodo["id"];
 type TodoCompletedType = ITodo["completed"];
@@ -12,33 +13,34 @@ export type ChangeTodoCompletedFunction = (
   completed: TodoCompletedType
 ) => void;
 
+// TODO: проверить, везде ли используются методы стора 
 export const Todo = () => {
   const { fetchedTodos, loading, error } = useFetchTodos(3);
-  const [todos, setTodos] = useState<ITodo[]>([]);
-  const [searchInput, setSearchInput] = useState<string>("");
+  const { setTodos, searchInput, setSearchInput } = useTodosStore();
+
 
   useEffect(() => {
     if (fetchedTodos) {
       setTodos(fetchedTodos);
       localStorage.setItem("todos", JSON.stringify(fetchedTodos));
     }
-  }, [fetchedTodos]);
+  }, [fetchedTodos, setTodos]);
 
   const changeTodoCompleted = useCallback(
     (id: TodoIDType, completed: TodoCompletedType) => {
-      setTodos((prevTodos) => {
-        const index = prevTodos.findIndex((todo) => todo.id === id);
-        if (index === -1) {
-          return prevTodos;
-        } else {
-          const newTodos = [...prevTodos];
-          newTodos[index] = { ...newTodos[index], completed };
-          return newTodos;
-        }
-      });
+
+      const { todos } = useTodosStore.getState();
+
+      const index = todos.findIndex((todo) => todo.id === id);
+
+      const newTodos = [...todos];
+      newTodos[index] = { ...newTodos[index], completed };
+      setTodos(newTodos);
     },
-    []
+    [setTodos]
   );
+
+  const { todos } = useTodosStore();
 
   const filteredTodos = useFilterTodos(todos, searchInput);
 
