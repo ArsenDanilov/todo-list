@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export interface ITodo {
   userId: number;
@@ -12,36 +13,23 @@ const axiosInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
 
-export const useFetchTodos = (limit: number) => {
-  const [fetchedTodos, setFetchedTodos] = useState<ITodo[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+export const useFetchTodos = (limit: number,setTodos: (todos: ITodo[]) => void) => {
+  const query = useQuery<ITodo[], Error>({
+    queryKey: ['todos', limit],
+    queryFn: async () => {
+      const response = await axiosInstance.get<ITodo[]>('/todos', {
+        params: { _limit: limit },
+      });
+      console.log(response.data);
+      return response.data;
+    },
+  });
 
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await axiosInstance.get<ITodo[]>("todos",
-          {
-            params: {
-              _limit: limit,
-            },
-          }
-        );
-        setFetchedTodos(response.data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setError(new Error(error.message || "Unknown error"));
-        } else if (error instanceof Error) {
-          setError(new Error(error.message));
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (query.isSuccess && query.data) {
+      setTodos(query.data as ITodo[]); 
+    }
+  }, [query.isSuccess, query.data, setTodos]);
 
-    fetchTodos();
-  }, [limit]);
-
-  return { fetchedTodos, loading, error }
+  return query;
 };
-

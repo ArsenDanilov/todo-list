@@ -1,5 +1,5 @@
 import styles from "./Todo.module.css";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
 import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
@@ -13,18 +13,10 @@ export type ChangeTodoCompletedFunction = (
   completed: TodoCompletedType
 ) => void;
 
-// TODO: проверить, везде ли используются методы стора 
 export const Todo = () => {
-  const { fetchedTodos, loading, error } = useFetchTodos(3);
+  
   const { setTodos, searchInput, setSearchInput } = useTodosStore();
-
-
-  useEffect(() => {
-    if (fetchedTodos) {
-      setTodos(fetchedTodos);
-      localStorage.setItem("todos", JSON.stringify(fetchedTodos));
-    }
-  }, [fetchedTodos, setTodos]);
+  const { isLoading: loading, error } = useFetchTodos(3, setTodos);
 
   const changeTodoCompleted = useCallback(
     (id: TodoIDType, completed: TodoCompletedType) => {

@@ -8,8 +8,7 @@ export interface ITodosStore {
   setSearchInput: (input: string) => void;
 }
 
-// TODO: добавить метод фильтрации
-export const useTodosStore = create<ITodosStore>((set, get) => ({
+export const useTodosStore = create<ITodosStore>((set) => ({
   todos: [],
   searchInput: "",
   setTodos: (todos) => set({ todos }),
