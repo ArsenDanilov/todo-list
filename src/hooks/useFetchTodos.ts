@@ -13,14 +13,13 @@ const axiosInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
 
-export const useFetchTodos = (limit: number,setTodos: (todos: ITodo[]) => void) => {
+export const useFetchTodos = (limit: number, setTodos: (todos: ITodo[]) => void) => {
   const query = useQuery<ITodo[], Error>({
     queryKey: ['todos', limit],
     queryFn: async () => {
       const response = await axiosInstance.get<ITodo[]>('/todos', {
         params: { _limit: limit },
       });
-      console.log(response.data);
       return response.data;
     },
   });

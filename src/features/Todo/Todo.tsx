@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
 import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
-import { useFilterTodos } from "../../hooks/useFilterTodos";
 import { useTodosStore } from "../../store/store";
 
 type TodoIDType = ITodo["id"];
@@ -15,7 +14,7 @@ export type ChangeTodoCompletedFunction = (
 
 export const Todo = () => {
   
-  const { setTodos, searchInput, setSearchInput } = useTodosStore();
+  const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } = useTodosStore();
   const { isLoading: loading, error } = useFetchTodos(3, setTodos);
 
   const changeTodoCompleted = useCallback(
@@ -32,9 +31,7 @@ export const Todo = () => {
     [setTodos]
   );
 
-  const { todos } = useTodosStore();
-
-  const filteredTodos = useFilterTodos(todos, searchInput);
+  const filteredTodos = getFilteredTodos(searchInput);
 
   return (
     <div className={styles.todo}>
