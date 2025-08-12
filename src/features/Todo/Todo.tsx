@@ -14,8 +14,9 @@ export type ChangeTodoCompletedFunction = (
 
 export const Todo = () => {
   
+  const { isLoading: loading, error } = useFetchTodos();
   const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } = useTodosStore();
-  const { isLoading: loading, error } = useFetchTodos(3, setTodos);
+  
 
   const changeTodoCompleted = useCallback(
     (id: TodoIDType, completed: TodoCompletedType) => {

@@ -3,14 +3,9 @@
     width: 100%;
     flex-wrap: wrap;
     gap: 5px;
-    outline: 1px solid black;
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 5px;
-}
-
-.card_completed {
-    outline: 1px solid green;
 }
 
 .completed {

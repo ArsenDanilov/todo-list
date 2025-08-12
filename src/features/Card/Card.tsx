@@ -16,7 +16,7 @@ export const Card = memo(({ id, title, completed, onClick }: ICard) => {
   }  
 
   return (
-    <div className={`${styles.card} ${completed ? styles.card_completed : ''}`}>
+    <div className={styles.card}>
       <input type="checkbox" checked={completed} onChange={toggleStatus} />
       <p className={completed ? styles.completed : ""}>Task: {title}</p>
     </div>
