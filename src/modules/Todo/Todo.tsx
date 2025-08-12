@@ -13,14 +13,12 @@ export type ChangeTodoCompletedFunction = (
 ) => void;
 
 export const Todo = () => {
-  
   const { isLoading: loading, error } = useFetchTodos();
-  const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } = useTodosStore();
-  
+  const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } =
+    useTodosStore();
 
   const changeTodoCompleted = useCallback(
     (id: TodoIDType, completed: TodoCompletedType) => {
-
       const { todos } = useTodosStore.getState();
 
       const index = todos.findIndex((todo) => todo.id === id);

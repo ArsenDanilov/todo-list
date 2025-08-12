@@ -1,8 +1,7 @@
-import styles from "../styles/App.module.css";
-import { Todo } from "../../features/Todo/Todo";
+import { Todo } from "../modules/Todo/Todo";
+import styles from "./App.module.css";
 
 function App() {
-
   return (
     <>
       <div className={styles.container}>

@@ -10,10 +10,9 @@ interface ICard {
 }
 
 export const Card = memo(({ id, title, completed, onClick }: ICard) => {
-
   const toggleStatus = () => {
     onClick(id, !completed);
-  }  
+  };
 
   return (
     <div className={styles.card}>
