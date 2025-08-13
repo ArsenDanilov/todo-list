@@ -1,6 +1,6 @@
 import { memo } from "react";
-import styles from "./Card.module.css";
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 interface ICard {
   id: number;
@@ -15,9 +15,11 @@ export const Card = memo(({ id, title, completed, onClick }: ICard) => {
   };
 
   return (
-    <div className={styles.card}>
-      <input type="checkbox" checked={completed} onChange={toggleStatus} />
-      <p className={completed ? styles.completed : ""}>Task: {title}</p>
-    </div>
+    <Box borderRadius="5px" mb="1.2rem" p="0.4rem" w="100%">
+      <Flex flexWrap="wrap" gap="5px">
+        <input type="checkbox" checked={completed} onChange={toggleStatus} />
+        <Text textDecoration={completed ? 'line-through' : 'none'}>{title}</Text>
+      </Flex>
+    </Box>
   );
 });

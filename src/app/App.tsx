@@ -1,12 +1,12 @@
+import { Container } from "@chakra-ui/react";
 import { Todo } from "../modules/Todo/Todo";
-import styles from "./App.module.css";
 
 function App() {
   return (
     <>
-      <div className={styles.container}>
+      <Container>
         <Todo />
-      </div>
+      </Container>
     </>
   );
 }

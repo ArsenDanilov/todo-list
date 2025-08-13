@@ -19,5 +19,5 @@ export function useIntersection(onIntersect: () => void) {
     } else {
       unsubscribe.current();
     }
-  }, [onIntersect])
+  }, [])
 }

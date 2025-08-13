@@ -1,9 +1,9 @@
 import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
 import { Card } from "../Card/Card";
-import styles from "./CardList.module.css";
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
 import { memo } from "react";
 import { useIntersection } from "../../hooks/useIntersection";
+import { Spinner, Flex, Text, Heading } from "@chakra-ui/react";
 
 interface ICardList {
   todos: ITodo[];
@@ -22,18 +22,22 @@ export const CardList = memo(
 
     if (loading) {
       return (
-        <h3 className={styles.cardList__loadingMessage}>
+        <Heading size="xl" color="blue.700">
           Loading todo list...
-        </h3>
+        </Heading>
       );
     }
 
     if (error) {
-      return <h3 className={styles.cardList__errorMessage}>{error.message}</h3>;
+      return (
+        <Heading size="xl" color="red.700">
+          {error.message}
+        </Heading>
+      );
     }
 
     return (
-      <div className={styles.cardList}>
+      <Flex flexWrap="wrap" justifyContent="center">
         {todos.length > 0 ? (
           todos.map((todo) => (
             <Card
@@ -45,13 +49,13 @@ export const CardList = memo(
             />
           ))
         ) : (
-          <p>No todos to display</p>
+          <Text>No todos to display</Text>
         )}
         <div ref={cursorRef}>
-          {!hasNextPage && <div>There is no data to loading</div>}
-          {isFetchingNextPage && <div>... Loading</div>}
+          {!hasNextPage && <Text>There is no data to loading</Text>}
+          {isFetchingNextPage && <Spinner color="blue" />}
         </div>
-      </div>
+      </Flex>
     );
   }
 );
