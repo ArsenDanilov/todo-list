@@ -1,12 +1,14 @@
 import { useCallback } from "react";
-import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
+import { useFetchTodos } from "../../hooks/useFetchTodos";
 import { CardList } from "../CardList/CardList";
 import { TodoSearcher } from "../TodoSearcher/TodoSearcher";
 import { useTodosStore } from "../../store/store";
 import { Box, Heading } from "@chakra-ui/react";
+import { type ITodo } from "../../store/store";
 
 type TodoIDType = ITodo["id"];
 type TodoCompletedType = ITodo["completed"];
+
 export type ChangeTodoCompletedFunction = (
   id: TodoIDType,
   completed: TodoCompletedType
@@ -14,11 +16,10 @@ export type ChangeTodoCompletedFunction = (
 
 export const Todo = () => {
   const { isLoading: loading, error } = useFetchTodos();
-  const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } =
-    useTodosStore();
+  const { todos, setTodos, searchInput, setSearchInput, getFilteredTodos } = useTodosStore();
 
-  const changeTodoCompleted = useCallback(
-    (id: TodoIDType, completed: TodoCompletedType) => {
+  const changeTodoCompleted = useCallback((id: TodoIDType, completed: TodoCompletedType) => {
+
       const { todos } = useTodosStore.getState();
 
       const index = todos.findIndex((todo) => todo.id === id);

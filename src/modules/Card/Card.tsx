@@ -2,6 +2,8 @@ import { memo } from "react";
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
 import { Flex, Text } from "@chakra-ui/react";
 
+
+
 interface ICard {
   id: number;
   title: string;

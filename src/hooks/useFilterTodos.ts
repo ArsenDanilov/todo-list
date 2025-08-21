@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { type ITodo } from "./useFetchTodos";
+import { type ITodo } from "../store/store";
 
 export const useFilterTodos = (
   todos: ITodo[],

@@ -1,4 +1,5 @@
-import { useFetchTodos, type ITodo } from "../../hooks/useFetchTodos";
+import { useFetchTodos } from "../../hooks/useFetchTodos";
+import { type ITodo } from "../../store/store";
 import { Card } from "../Card/Card";
 import { type ChangeTodoCompletedFunction } from "../Todo/Todo";
 import { memo } from "react";
@@ -12,8 +13,7 @@ interface ICardList {
   onClick: ChangeTodoCompletedFunction;
 }
 
-export const CardList = memo(
-  ({ todos, loading, error, onClick }: ICardList) => {
+export const CardList = memo(({ todos, loading, error, onClick }: ICardList) => {
     const { fetchNextPage, hasNextPage, isFetchingNextPage } = useFetchTodos();
 
     const cursorRef = useIntersection(() => {
