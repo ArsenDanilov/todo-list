@@ -7,7 +7,7 @@ export interface ITodo {
   id: number;
   title: string;
   completed: boolean;
-}
+} 
 
 interface IActions {
   setTodos: (todos: ITodo[]) => void;
